@@ -1,20 +1,17 @@
-const db = require('../config/database');
+// userService.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const userRepository = require('../repostitory/userRepository');
 
 // Criar novo usuário
 exports.createUser = async (name, email, password) => {
-  const { rows } = await db.query(
-    'INSERT INTO users (name, email, password) VALUES (, , ) RETURNING *',
-    [name, email, password]
-  );
-  return rows[0];
+  const hashedPassword = await bcrypt.hash(password, 10);
+  return await userRepository.createUser(name, email, hashedPassword);
 };
 
 // Login de usuário
 exports.login = async (email, password) => {
-  const { rows } = await db.query('SELECT * FROM users WHERE email = ', [email]);
-  const user = rows[0];
+  const user = await userRepository.findUserByEmail(email);
   
   if (!user) {
     throw new Error('Email não encontrado');
