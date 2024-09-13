@@ -1,7 +1,7 @@
 // userService.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const userRepository = require('../repostitory/userRepository');
+const userRepository = require('../repositories/userRepository');
 
 // Criar novo usuário
 exports.createUser = async (name, email, password) => {

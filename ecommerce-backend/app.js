@@ -14,3 +14,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+const categoryRoutes = require('./routes/categoryRoutes');
+app.use('/api/categories', categoryRoutes);
+const productRoutes = require('./routes/productRoutes');
+app.use('/api/products', productRoutes);
